@@ -1,0 +1,43 @@
+.contact {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.contactWrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.nameInfo,
+.numberInfo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.icon {
+  display: block;
+  margin-right: 5px;
+}
+
+.contact button {
+  border: 1px solid black;
+  border-radius: 3px;
+  background-color: rgb(230, 230, 230);
+  color: black;
+  padding-left: 5px;
+  padding-right: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.contact button:hover {
+  background-color: rgb(213, 211, 211);
+}
+
+.contact button:active {
+  background-color: rgb(230, 230, 230);
+}
