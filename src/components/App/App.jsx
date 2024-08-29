@@ -7,9 +7,19 @@ import css from "./App.module.css";
 export default function App() {
   const [images, setImages] = useState([]);
   const [topic, setTopic] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(999);
 
   const handleSearch = newTopic => {
     setTopic(newTopic);
+    setPage(1);
+    setImages([]);
+  };
+
+  const handleLoadMore = () => {
+    setPage(page + 1);
   };
 
   useEffect(() => {
@@ -19,21 +29,30 @@ export default function App() {
 
     async function getImages() {
       try {
-        const fetchedImages = await fetchImages(topic);
-        setImages(fetchedImages);
-        console.log(fetchedImages);
+        setLoading(true);
+        setError(false);
+        const newImages = await fetchImages(page, topic);
+        setImages(prevState => [...prevState, ...newImages.images]);
+        setTotalPages(newImages.totalPages);
       } catch (error) {
-        console.log("ERROR!");
+        setError(true);
       } finally {
+        setLoading(false);
       }
     }
     getImages();
-  }, [topic]);
+  }, [page, topic]);
 
   return (
     <div className={css.container}>
       <SearchBar onSearch={handleSearch} />
       {images.length > 0 && <ImageGallery items={images} />}
+      {page >= totalPages && !loading && <b>End of collection!</b>}
+      {error && <b>ERROR!</b>}
+      {loading && <b>LOADING...</b>}
+      {images.length > 0 && !loading && page < totalPages && (
+        <button onClick={handleLoadMore}>Load More</button>
+      )}
     </div>
   );
 }
