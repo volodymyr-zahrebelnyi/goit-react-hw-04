@@ -3,3 +3,29 @@
   padding: 32px 32px;
   margin: 0 auto;
 }
+
+.alert {
+  text-align: center;
+  display: block;
+  margin-top: 15px;
+}
+
+.btnLoadMore {
+  display: block;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+  padding: 8px 16px;
+  margin: 0 auto;
+  margin-top: 15px;
+  width: 125px;
+  height: 40px;
+  color: #fff;
+  background-color: #4e75ff;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.spinner {
+  margin: 0 auto;
+  color: #4e75ff;
+}

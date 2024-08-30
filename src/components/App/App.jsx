@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Modal from "react-modal";
+import { ThreeDots } from "react-loader-spinner";
 import SearchBar from "./SearchBar/SearchBar";
 import ImageGallery from "../ImageGallery/ImageGallery";
 import ImageModal from "../ImageModal/ImageModal";
@@ -64,11 +65,27 @@ export default function App() {
     <div className={css.container}>
       <SearchBar onSearch={handleSearch} />
       {images.length > 0 && <ImageGallery items={images} onOpen={openModal} />}
-      {page >= totalPages && !loading && <b>End of collection!</b>}
-      {error && <b>ERROR!</b>}
-      {loading && <b>LOADING...</b>}
+      {page >= totalPages && !loading && (
+        <b className={css.alert}>End of collection!</b>
+      )}
+      {error && <b className={css.alert}>ERROR!</b>}
+      {loading && (
+        <ThreeDots
+          className={css.spinner}
+          visible={true}
+          height="80"
+          width="80"
+          color="#d651c8"
+          radius="9"
+          ariaLabel="three-dots-loading"
+          wrapperStyle={{ justifyContent: "center" }}
+          wrapperClass
+        />
+      )}
       {images.length > 0 && !loading && page < totalPages && (
-        <button onClick={handleLoadMore}>Load More</button>
+        <button className={css.btnLoadMore} onClick={handleLoadMore}>
+          Load More
+        </button>
       )}
       {modalIsOpen && selectedImg && (
         <ImageModal

@@ -10,6 +10,11 @@ export default function ImageModal({ isOpen, onClose, image }) {
       bottom: "auto",
       marginRight: "-50%",
       transform: "translate(-50%, -50%)",
+      background: "none",
+      border: "none",
+    },
+    overlay: {
+      backgroundColor: "rgba(0, 0, 0, 0.75)",
     },
   };
 
