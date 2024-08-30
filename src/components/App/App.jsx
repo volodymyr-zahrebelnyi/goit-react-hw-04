@@ -1,8 +1,12 @@
 import { useState, useEffect } from "react";
+import Modal from "react-modal";
 import SearchBar from "./SearchBar/SearchBar";
 import ImageGallery from "../ImageGallery/ImageGallery";
+import ImageModal from "../ImageModal/ImageModal";
 import { fetchImages } from "../services/images-api";
 import css from "./App.module.css";
+
+Modal.setAppElement("#root");
 
 export default function App() {
   const [images, setImages] = useState([]);
@@ -11,6 +15,8 @@ export default function App() {
   const [error, setError] = useState(false);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(999);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [selectedImg, setSelectedImg] = useState(null);
 
   const handleSearch = newTopic => {
     setTopic(newTopic);
@@ -43,15 +49,33 @@ export default function App() {
     getImages();
   }, [page, topic]);
 
+  const openModal = image => {
+    // if (!modalIsOpen)
+    setSelectedImg(image);
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setSelectedImg(null);
+    setModalIsOpen(false);
+  };
+
   return (
     <div className={css.container}>
       <SearchBar onSearch={handleSearch} />
-      {images.length > 0 && <ImageGallery items={images} />}
+      {images.length > 0 && <ImageGallery items={images} onOpen={openModal} />}
       {page >= totalPages && !loading && <b>End of collection!</b>}
       {error && <b>ERROR!</b>}
       {loading && <b>LOADING...</b>}
       {images.length > 0 && !loading && page < totalPages && (
         <button onClick={handleLoadMore}>Load More</button>
+      )}
+      {modalIsOpen && selectedImg && (
+        <ImageModal
+          isOpen={modalIsOpen}
+          onClose={closeModal}
+          image={selectedImg}
+        />
       )}
     </div>
   );

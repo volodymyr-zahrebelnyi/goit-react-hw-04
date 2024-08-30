@@ -5,19 +5,18 @@ export default function ImageCard({
     urls: { small, regular },
     description,
   },
+  onOpen,
 }) {
   return (
     <div>
-      <a href={regular} data-image-description={description}>
-        <img
-          className={css.galleryImage}
-          src={small}
-          alt={description}
-          width="360"
-          height="200"
-          // orientation={landscape}
-        />
-      </a>
+      <img
+        className={css.galleryImage}
+        src={small}
+        alt={description}
+        width="360"
+        height="200"
+        onClick={() => onOpen({ src: regular, description })}
+      />
     </div>
   );
 }
