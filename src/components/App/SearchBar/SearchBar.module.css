@@ -44,3 +44,11 @@
   align-items: center;
   justify-content: center;
 }
+
+.icon {
+  color: grey;
+}
+
+.icon:hover {
+  color: black;
+}

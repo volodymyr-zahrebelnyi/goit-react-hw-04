@@ -51,7 +51,6 @@ export default function App() {
   }, [page, topic]);
 
   const openModal = image => {
-    // if (!modalIsOpen)
     setSelectedImg(image);
     setModalIsOpen(true);
   };
@@ -79,7 +78,6 @@ export default function App() {
           radius="9"
           ariaLabel="three-dots-loading"
           wrapperStyle={{ justifyContent: "center" }}
-          wrapperClass
         />
       )}
       {images.length > 0 && !loading && page < totalPages && (
@@ -87,13 +85,21 @@ export default function App() {
           Load More
         </button>
       )}
-      {modalIsOpen && selectedImg && (
-        <ImageModal
-          isOpen={modalIsOpen}
-          onClose={closeModal}
-          image={selectedImg}
-        />
-      )}
+      <ImageModal
+        isOpen={modalIsOpen}
+        onClose={closeModal}
+        image={selectedImg}
+      />
     </div>
   );
+}
+
+{
+  /* {modalIsOpen && selectedImg && (
+  <ImageModal
+    isOpen={modalIsOpen}
+    onClose={closeModal}
+    image={selectedImg}
+  />
+)} */
 }

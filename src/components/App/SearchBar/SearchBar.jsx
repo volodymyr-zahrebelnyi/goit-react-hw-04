@@ -29,7 +29,7 @@ export default function SearchBar({ onSearch }) {
                 placeholder="Search images and photos"
               />
               <button className={css.btn} type="submit">
-                <IoIosSearch />
+                <IoIosSearch className={css.icon} />
               </button>
             </div>
           </Form>
