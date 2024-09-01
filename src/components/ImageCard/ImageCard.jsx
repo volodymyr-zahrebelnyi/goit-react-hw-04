@@ -4,6 +4,8 @@ export default function ImageCard({
   item: {
     urls: { small, regular },
     description,
+    user: { username },
+    likes,
   },
   onOpen,
 }) {
@@ -15,7 +17,7 @@ export default function ImageCard({
         alt={description}
         width="360"
         height="200"
-        onClick={() => onOpen({ src: regular, description })}
+        onClick={() => onOpen({ src: regular, description, likes, username })}
       />
     </div>
   );

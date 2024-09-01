@@ -18,6 +18,7 @@ export default function App() {
   const [totalPages, setTotalPages] = useState(999);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedImg, setSelectedImg] = useState(null);
+  const [showScrollToTop, setShowScrollToTop] = useState(false);
 
   const handleSearch = newTopic => {
     setTopic(newTopic);
@@ -60,6 +61,20 @@ export default function App() {
     setModalIsOpen(false);
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+    setShowScrollToTop(false);
+  };
+
+  useEffect(() => {
+    if (page >= 2 && !modalIsOpen) {
+      setShowScrollToTop(true);
+    }
+  }, [page, modalIsOpen]);
+
   return (
     <div className={css.container}>
       <SearchBar onSearch={handleSearch} />
@@ -90,6 +105,11 @@ export default function App() {
         onClose={closeModal}
         image={selectedImg}
       />
+      {showScrollToTop && !modalIsOpen && (
+        <button className={css.btnToTop} onClick={scrollToTop}>
+          ↑
+        </button>
+      )}
     </div>
   );
 }

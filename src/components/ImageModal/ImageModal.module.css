@@ -1,0 +1,23 @@
+.image {
+  display: block;
+  margin: 0 auto;
+}
+
+.description {
+  max-width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  padding: 10px 0;
+  color: white;
+  font-weight: bold;
+}
+
+.author {
+  font-size: 14px;
+  color: wheat;
+}
+
+.likes {
+  font-size: 14px;
+  color: wheat;
+}
