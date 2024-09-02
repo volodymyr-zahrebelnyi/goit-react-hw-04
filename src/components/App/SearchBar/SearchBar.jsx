@@ -11,7 +11,9 @@ export default function SearchBar({ onSearch }) {
           initialValues={{ topic: "" }}
           onSubmit={(values, actions) => {
             if (!values.topic.trim()) {
-              toast.error("Please enter topic to search images.");
+              toast.error("Please enter topic to search images.", {
+                position: "top-right",
+              });
               return;
             }
             onSearch(values.topic);

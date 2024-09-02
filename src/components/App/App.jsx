@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
 import Modal from "react-modal";
-import { ThreeDots } from "react-loader-spinner";
+import toast, { Toaster } from "react-hot-toast";
 import { fetchImages } from "../services/images-api";
 import SearchBar from "./SearchBar/SearchBar";
 import ImageGallery from "../ImageGallery/ImageGallery";
 import ImageModal from "../ImageModal/ImageModal";
 import LoadMoreBtn from "./LoadMoreBtn/LoadMoreBtn";
 import BtnToTop from "../BtnToTop/BtnToTop";
+import EndOfCollection from "../EndOfCollection/EndOfCollection";
+import ErrorMessage from "../ErrorMessage/ErrorMessage";
+import Loader from "../Loader/Loader";
 import css from "./App.module.css";
 
 Modal.setAppElement("#root");
@@ -26,6 +29,7 @@ export default function App() {
     setTopic(newTopic);
     setPage(1);
     setImages([]);
+    setShowScrollToTop(false);
   };
 
   const handleLoadMore = () => {
@@ -52,6 +56,18 @@ export default function App() {
     }
     getImages();
   }, [page, topic]);
+
+  useEffect(() => {
+    if (page >= totalPages && !loading) {
+      toast.success("End of collection!", { position: "top-right" });
+    }
+  }, [page, totalPages, loading]);
+
+  useEffect(() => {
+    if (error) {
+      toast.error("ERROR!", { position: "top-right" });
+    }
+  }, [error]);
 
   const openModal = image => {
     setSelectedImg(image);
@@ -80,23 +96,11 @@ export default function App() {
   return (
     <div className={css.container}>
       <SearchBar onSearch={handleSearch} />
+      <Toaster position="top-right" />
       {images.length > 0 && <ImageGallery items={images} onOpen={openModal} />}
-      {page >= totalPages && !loading && (
-        <b className={css.alert}>End of collection!</b>
-      )}
-      {error && <b className={css.alert}>ERROR!</b>}
-      {loading && (
-        <ThreeDots
-          className={css.spinner}
-          visible={true}
-          height="80"
-          width="80"
-          color="#d651c8"
-          radius="9"
-          ariaLabel="three-dots-loading"
-          wrapperStyle={{ justifyContent: "center" }}
-        />
-      )}
+      {page >= totalPages && !loading && <EndOfCollection />}
+      {error && <ErrorMessage />}
+      {loading && <Loader />}
       {images.length > 0 && !loading && page < totalPages && (
         <LoadMoreBtn onClick={handleLoadMore} />
       )}
