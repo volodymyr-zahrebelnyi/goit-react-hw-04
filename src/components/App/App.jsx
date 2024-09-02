@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import Modal from "react-modal";
 import { ThreeDots } from "react-loader-spinner";
+import { fetchImages } from "../services/images-api";
 import SearchBar from "./SearchBar/SearchBar";
 import ImageGallery from "../ImageGallery/ImageGallery";
 import ImageModal from "../ImageModal/ImageModal";
-import { fetchImages } from "../services/images-api";
+import LoadMoreBtn from "./LoadMoreBtn/LoadMoreBtn";
+import BtnToTop from "../BtnToTop/BtnToTop";
 import css from "./App.module.css";
 
 Modal.setAppElement("#root");
@@ -96,30 +98,14 @@ export default function App() {
         />
       )}
       {images.length > 0 && !loading && page < totalPages && (
-        <button className={css.btnLoadMore} onClick={handleLoadMore}>
-          Load More
-        </button>
+        <LoadMoreBtn onClick={handleLoadMore} />
       )}
       <ImageModal
         isOpen={modalIsOpen}
         onClose={closeModal}
         image={selectedImg}
       />
-      {showScrollToTop && !modalIsOpen && (
-        <button className={css.btnToTop} onClick={scrollToTop}>
-          ↑
-        </button>
-      )}
+      {showScrollToTop && !modalIsOpen && <BtnToTop onClick={scrollToTop} />}
     </div>
   );
-}
-
-{
-  /* {modalIsOpen && selectedImg && (
-  <ImageModal
-    isOpen={modalIsOpen}
-    onClose={closeModal}
-    image={selectedImg}
-  />
-)} */
 }
