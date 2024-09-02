@@ -58,8 +58,11 @@ export default function App() {
   }, [page, topic]);
 
   useEffect(() => {
+    toast.dismiss();
     if (page >= totalPages && !loading) {
-      toast.success("End of collection!", { position: "top-right" });
+      toast.success("End of collection!", {
+        position: "top-right",
+      });
     }
   }, [page, totalPages, loading]);
 
